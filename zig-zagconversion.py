@@ -1,24 +1,16 @@
-public class Solution {
-    public String convert(String s, int numRows) {
-        if (numRows == 1 || s.length() <= numRows) return s;
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows == 1 or len(s) <= numRows:
+            return s
 
-        StringBuilder[] rows = new StringBuilder[numRows];
-        for (int i = 0; i < numRows; i++) rows[i] = new StringBuilder();
+        rows = ["" for _ in range(numRows)]
+        current_row = 0
+        going_down = False
 
-        int currentRow = 0;
-        boolean goingDown = false;
+        for c in s:
+            rows[current_row] += c
+            if current_row == 0 or current_row == numRows - 1:
+                going_down = not going_down
+            current_row += 1 if going_down else -1
 
-        for (char c : s.toCharArray()) {
-            rows[currentRow].append(c);
-            if (currentRow == 0 || currentRow == numRows - 1)
-                goingDown = !goingDown;
-            currentRow += goingDown ? 1 : -1;
-        }
-
-        StringBuilder result = new StringBuilder();
-        for (StringBuilder row : rows)
-            result.append(row);
-
-        return result.toString();
-    }
-}
+        return "".join(rows)
